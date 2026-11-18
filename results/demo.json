@@ -1,0 +1,290 @@
+{
+  "project": "Linux_CLI_Lab",
+  "schema_version": 1,
+  "recorded_at": "2026-11-18T21:44:56.841506+00:00",
+  "environment": {
+    "platform": "Linux",
+    "python": "3.12.3",
+    "tools": {
+      "bash": true,
+      "find": true,
+      "grep": true,
+      "tr": true,
+      "awk": true,
+      "xargs": true,
+      "xxd": true,
+      "curl": true,
+      "wget": true,
+      "stat": true
+    },
+    "ready": true
+  },
+  "checks_passed": 24,
+  "scope": "Isolated local Linux workspace and loopback HTTP. Administrative service tasks are documented.",
+  "steps": [
+    {
+      "id": "01",
+      "title": "Linux environment",
+      "category": "Environment",
+      "command": "uname -s\nprintf 'Required command-line tools are available\\n'",
+      "stdout": "Linux\nRequired command-line tools are available",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 7.294
+    },
+    {
+      "id": "02",
+      "title": "Fixture inventory",
+      "category": "Environment",
+      "command": "find input -type f | sort",
+      "stdout": "input/awk_task.txt\ninput/grep_task.txt\ninput/one/file_list_1.txt\ninput/parts/shortrockyou_01.txt\ninput/parts/shortrockyou_02.txt\ninput/parts/shortrockyou_03.txt\ninput/parts/shortrockyou_04.txt\ninput/two/file_list_2.txt\ninput/xarg_task.txt\ninput/xxd_task.txt",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 23.255
+    },
+    {
+      "id": "03",
+      "title": "File lifecycle and backup",
+      "category": "Files",
+      "command": "mkdir project\nprintf 'Mohammad Rohaan | i222327\\n' > project/introduction.txt\nprintf 'Project Started\\n' >> project/introduction.txt\ncp project/introduction.txt project/backup.txt\nmv project/backup.txt backup.txt\ncmp project/introduction.txt backup.txt\ncat backup.txt",
+      "stdout": "Mohammad Rohaan | i222327\nProject Started",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 28.123
+    },
+    {
+      "id": "04",
+      "title": "Decimal addition",
+      "category": "Files",
+      "command": "python3 addition.py 0.1 0.2",
+      "stdout": "Hey i222327, the sum of Two Numbers is: 0.3",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 258.902
+    },
+    {
+      "id": "05",
+      "title": "Owner-only executable",
+      "category": "Files",
+      "command": "chmod 700 addition.py\nstat -c '%a %A %n' addition.py\npython3 addition.py -4 9.25",
+      "stdout": "700 -rwx------ addition.py\nHey i222327, the sum of Two Numbers is: 5.25",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 199.028
+    },
+    {
+      "id": "06",
+      "title": "Scoped search and account fields",
+      "category": "Text",
+      "command": "find input -type f -name grep_task.txt\ngrep -i -E '^(username|comment):' input/grep_task.txt",
+      "stdout": "input/grep_task.txt\nusername: areeba.khan\ncomment: The user requested that multi-factor authentication be enabled.",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 6.335
+    },
+    {
+      "id": "07",
+      "title": "Character class extraction",
+      "category": "Text",
+      "command": "printf 'abc42XYZ07\\n' | tr -cd '[:digit:]'\nprintf '\\n'\nprintf 'G7aQ9Zf\\n' | tr -cd '[:xdigit:]'\nprintf '\\n'",
+      "stdout": "4207\n7a9f",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 8.939
+    },
+    {
+      "id": "08",
+      "title": "Uppercase conversion",
+      "category": "Text",
+      "command": "tr '[:lower:]' '[:upper:]' < input/grep_task.txt",
+      "stdout": "# CS-3002 ACCOUNT-AUDIT DATASET\n# REVIEW NOTE: EXAMINE ACCOUNT OWNERSHIP AND ACCESS CONTROLS CAREFULLY.\nRECORD_ID: 1047\nFULL_NAME: AREEBA KHAN\nUSERNAME: AREEBA.KHAN\nDEPARTMENT: SCHOOL OF COMPUTING\nACCOUNT_STATUS: ACTIVE\nPASSWORD: NUCES-LAB@2026\nROLE: SECURITY_TRAINEE\nLAST_LOGIN: 2026-08-29\nCOMMENT: THE USER REQUESTED THAT MULTI-FACTOR AUTHENTICATION BE ENABLED.\nFAILED_LOGINS: 2",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 6.819
+    },
+    {
+      "id": "09",
+      "title": "Vowel removal",
+      "category": "Text",
+      "command": "printf 'Information Security\\n' | tr -d 'AEIOUaeiou'",
+      "stdout": "nfrmtn Scrty",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 6.028
+    },
+    {
+      "id": "10",
+      "title": "Spaces and repeated characters",
+      "category": "Text",
+      "command": "printf 'Linux    lab\\n' | tr -s ' ' | tr ' ' '_'",
+      "stdout": "Linux_lab",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 7.222
+    },
+    {
+      "id": "11",
+      "title": "Alphanumeric and tab handling",
+      "category": "Text",
+      "command": "printf 'Linux! CLI #2026\\n' | tr -cd '[:alnum:]'\nprintf '\\n'\nprintf 'name\\tscore\\n' | tr '\\t' ' '",
+      "stdout": "LinuxCLI2026\nname score",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 9.837
+    },
+    {
+      "id": "12",
+      "title": "AWK name and score columns",
+      "category": "Text",
+      "command": "awk '{print $1 \":\" $4}' input/awk_task.txt",
+      "stdout": "Ali:78\nSara:91\nHamza:84\nZoya:88\nUsman:73\nAyesha:95\nBilal:81\nHira:89",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 12.622
+    },
+    {
+      "id": "13",
+      "title": "Comma-separated names",
+      "category": "Text",
+      "command": "awk 'BEGIN {sep=\"\"} {printf \"%s%s\",sep,$1; sep=\", \"} END {print \"\"}' input/awk_task.txt",
+      "stdout": "Ali, Sara, Hamza, Zoya, Usman, Ayesha, Bilal, Hira",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 9.025
+    },
+    {
+      "id": "14",
+      "title": "Score summary",
+      "category": "Text",
+      "command": "awk '{sum+=$4; n++; if($4>max){max=$4; top=$1}} END {printf \"students=%d average=%.3f top=%s score=%d\\n\",n,sum/n,top,max}' input/awk_task.txt",
+      "stdout": "students=8 average=84.875 top=Ayesha score=95",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 7.82
+    },
+    {
+      "id": "15",
+      "title": "Batch filenames including a leading dash",
+      "category": "Batch",
+      "command": "mkdir batch\ncd batch\nxargs -a ../input/xarg_task.txt -d '\\n' -t touch --\nxargs -a ../input/xarg_task.txt -d '\\n' -t chmod 400 --\nfind . -type f -printf '%m %f\\n' | sort",
+      "stdout": "400 -security_check.txt\n400 audit_report.txt\n400 backup_config.cfg\n400 evidence_notes.txt\n400 incident_log.txt",
+      "stderr": "touch -- audit_report.txt backup_config.cfg evidence_notes.txt incident_log.txt -security_check.txt\nchmod 400 -- audit_report.txt backup_config.cfg evidence_notes.txt incident_log.txt -security_check.txt",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 16.324
+    },
+    {
+      "id": "16",
+      "title": "Rebuild the supplied wordlist",
+      "category": "Batch",
+      "command": "cd input\ncat one/file_list_1.txt two/file_list_2.txt | xargs -n 1 -t cat -- > ../wordlist.txt\ncat ../wordlist.txt",
+      "stdout": "admin\nadministrator\naccess\naccount\npassword\npassword123\nwelcome\nsecurity\nstudent\nterminal\nlinux\nkali\nnetwork\nserver\nfirewall\ncybersecurity",
+      "stderr": "cat -- parts/shortrockyou_01.txt\ncat -- parts/shortrockyou_02.txt\ncat -- parts/shortrockyou_03.txt\ncat -- parts/shortrockyou_04.txt",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 18.223
+    },
+    {
+      "id": "17",
+      "title": "Null-delimited filenames",
+      "category": "Batch",
+      "command": "mkdir edge\nprintf 'example\\n' > 'edge/file with spaces.txt'\nfind edge -type f -print0 | xargs -0 -r wc -l --",
+      "stdout": "1 edge/file with spaces.txt",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 13.067
+    },
+    {
+      "id": "18",
+      "title": "Local HTTP request and user agent",
+      "category": "Transfer",
+      "command": "curl --fail --silent --show-error --noproxy '*' -A juzztesting 'http://127.0.0.1:'\"$LAB_PORT\"'/sample.txt'",
+      "stdout": "Linux CLI Lab local transfer fixture",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 30.972
+    },
+    {
+      "id": "19",
+      "title": "Local upload and response status",
+      "category": "Transfer",
+      "command": "curl --fail --silent --show-error --noproxy '*' -T server/sample.txt -w 'HTTP %{http_code}\\n' 'http://127.0.0.1:'\"$LAB_PORT\"'/upload.txt'",
+      "stdout": "upload received\nHTTP 201",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 32.132
+    },
+    {
+      "id": "20",
+      "title": "Wget log and exact transfer check",
+      "category": "Transfer",
+      "command": "wget --no-proxy --append-output=download.log --limit-rate=125000 --timeout=5 --tries=1 -O downloaded.txt 'http://127.0.0.1:'\"$LAB_PORT\"'/sample.txt'\ncmp downloaded.txt server/sample.txt\nprintf 'download bytes verified\\n'\nwc -c < downloaded.txt",
+      "stdout": "download bytes verified\n37",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 20.1
+    },
+    {
+      "id": "21",
+      "title": "Wget timestamp-aware refresh",
+      "category": "Transfer",
+      "command": "mkdir refresh\ncd refresh\nwget --no-proxy --timestamping --timeout=5 --tries=1 'http://127.0.0.1:'\"$LAB_PORT\"'/sample.txt' 2> first.log\nwget --no-proxy --timestamping --timeout=5 --tries=1 'http://127.0.0.1:'\"$LAB_PORT\"'/sample.txt' 2> second.log\ncmp sample.txt ../server/sample.txt\nprintf 'timestamp refresh bytes verified\\n'",
+      "stdout": "timestamp refresh bytes verified",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 42.03
+    },
+    {
+      "id": "22",
+      "title": "Hex slice from offset 0x0a",
+      "category": "Binary",
+      "command": "xxd -l 50 -s 0x0a input/xxd_task.txt",
+      "stdout": "0000000a: 2d32 3032 367c 4f66 6673 6574 2069 6e73  -2026|Offset ins\n0000001a: 7065 6374 696f 6e20 7361 6d70 6c65 7c37  pection sample|7\n0000002a: 4139 3143 3445 387c 5061 636b 6574 3a41  A91C4E8|Packet:A\n0000003a: 4c4c                                     LL",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 16.546
+    },
+    {
+      "id": "23",
+      "title": "Three groups of three octets",
+      "category": "Binary",
+      "command": "xxd -c 9 -g 3 -l 36 input/xxd_task.txt",
+      "stdout": "00000000: 484452 2d4353 333030  HDR-CS300\n00000009: 322d32 303236 7c4f66  2-2026|Of\n00000012: 667365 742069 6e7370  fset insp\n0000001b: 656374 696f6e 207361  ection sa",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 4.372
+    },
+    {
+      "id": "24",
+      "title": "Flag extraction and byte round-trip",
+      "category": "Binary",
+      "command": "grep -o 'flag{[^}]*}' input/xxd_task.txt\nxxd -p input/xxd_task.txt | xxd -r -p > restored.txt\ncmp restored.txt input/xxd_task.txt\nprintf 'byte round-trip verified\\n'",
+      "stdout": "flag{xxd_offset_master_2026}\nbyte round-trip verified",
+      "stderr": "",
+      "returncode": 0,
+      "passed": true,
+      "duration_ms": 16.028
+    }
+  ]
+}

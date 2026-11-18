@@ -1,0 +1,9 @@
+id,asset,scenario,likelihood,impact,priority,control
+R01,Identity,Account takeover,4,5,20,MFA and secure recovery
+R02,Account records,Cross-account access,3,5,15,Object-level authorization
+R03,Database,SQL injection,3,5,15,Parameterized queries
+R04,Transactions,Replay and duplicate debit,3,5,15,Idempotency and state checks
+R05,Session tokens,Session theft,3,4,12,Protected cookies and session expiry
+R06,Audit records,Log leakage,3,4,12,Redaction and restricted access
+R07,Application,Dependency compromise,3,4,12,Dependency review and updates
+R08,Availability,Service disruption,4,4,16,Capacity and layered rate controls

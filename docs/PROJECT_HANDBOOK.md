@@ -1,0 +1,151 @@
+# Project Handbook
+
+## Architecture and Responsibilities
+
+The project has four cooperating layers. The command-line entry point selects a task, the execution layer runs real Linux tools, the evidence layer checks saved results, and the presentation builder turns the reviewed evidence into the site, figures and report.
+
+The demo changes files inside a new temporary directory. Original fixtures are read from the repository, checked against their SHA-256 manifest and copied into the workspace. Successful completion writes one JSON result using a temporary file followed by an atomic replacement.
+
+The showcase builder reads the saved result rather than executing commands while a visitor browses the website. This keeps the static GitHub Pages experience usable without a Python service.
+
+| Layer | Maintained file | Responsibility |
+| --- | --- | --- |
+| Command interface | cli_lab/__main__.py | Parse doctor, demo, verify and summary requests. |
+| Execution | cli_lab/lab.py | Check tools, prepare fixtures, execute commands and clean up. |
+| Numeric example | cli_lab/addition.py | Parse finite decimal operands and display their sum. |
+| Evidence inspection | cli_lab/evidence.py | Validate saved-run structure and fixture-derived outputs. |
+| Presentation | tools/build_showcase.py | Rebuild README, webpage, figures and the PDF. |
+| Audit | tools/verify_showcase.py | Check navigation order, links, image sizes and the appendix. |
+
+## Reproduction and Platform Guide
+
+Run the command-line project from the repository root with Python 3.10 or newer. Linux, Ubuntu on WSL and the original course VM provide the GNU command environment. On Windows, the saved-evidence commands and Python regression tests can run directly.
+
+doctor checks tool availability and reports whether the Linux execution prerequisites are present. demo executes the full checked sequence. verify inspects an existing JSON result and the current fixtures. summary prints the same verified evidence as a concise category breakdown.
+
+To keep the checked-in evidence while exploring, give demo a different --output path. To inspect that result, provide its path with --evidence. A fresh demo records its own timestamp and durations.
+
+    python3 -m cli_lab doctor
+    python3 -m cli_lab demo --output results/my_demo.json
+    python3 -m cli_lab verify --evidence results/my_demo.json
+    python3 -m cli_lab summary --evidence results/my_demo.json
+    python3 -m unittest discover -s tests -v
+
+| Task | Environment | Expected outcome |
+| --- | --- | --- |
+| Run all 24 exercises | Linux with required GNU tools | Checked JSON evidence in the chosen output path. |
+| Inspect a saved run | Python on Windows or Linux | Verified counts, categories and evidence digest. |
+| Open the webpage | Browser | Static results, dataset explorer and searchable gallery. |
+| Rebuild the showcase | Python, document dependencies and a browser | Shared images, README, site and report. |
+| Build targets | GNU Make with Python configured | doctor, demo, test, summary, audit, showcase and verify. |
+
+## Fixture Catalog and Data Interpretation
+
+The ten supplied files total 1,031 bytes. They are small classroom inputs selected to make the result of each command inspectable. The manifest records the expected bytes of every fixture before a demo starts.
+
+The AWK table contains eight rows with four whitespace-separated fields: name, program, city and score. Its scores sum to 679, giving an average of 679 / 8 = 84.875. Ayesha has the highest score, 95. The browser explorer filters these same rows and recalculates the mean for the selected records.
+
+The filename list includes -security_check.txt to exercise operand handling. The four wordlist parts contain sixteen training entries. The account-audit fixture includes a classroom password field; it is demonstration input and should not be used as a real credential.
+
+| Input | Content | Exercises |
+| --- | --- | --- |
+| awk_task.txt | 8 name/program/city/score records | 12–14; browser data explorer |
+| grep_task.txt | Account-audit text and a comment | 06 and 08 |
+| xarg_task.txt | 5 filenames, including a leading dash | 15 |
+| one/file_list_1.txt; two/file_list_2.txt | Paths to the four supplied parts | 16 |
+| parts/shortrockyou_01.txt through 04.txt | 16 classroom wordlist entries | 16 |
+| xxd_task.txt | 151-byte inspection sample with a training flag | 22–24 |
+| data/manifest.json | SHA-256 expectations for all 10 fixtures | Demo preflight and verify |
+
+## Evidence Lifecycle and Validation
+
+A run records project and schema identifiers, its UTC timestamp, environment information, the passed count and twenty-four ordered steps. Each step includes its command, stdout, stderr, exit code, check result and elapsed milliseconds.
+
+The runner executes commands with a C locale, checks command completion and validates the expected output. Temporary workspace paths are normalized to <workspace> in the saved record. Diagnostic output remains in stderr, including verbose xargs traces.
+
+The evidence inspector checks exercise IDs 01 through 24, required text, successful result fields and finite non-negative timings. It also compares score and wordlist output with the supplied inputs, verifies mode-400 records and checks the recorded transfer length and training flag.
+
+The JSON digest identifies a particular saved file. The record remains editable local evidence. Execution provenance depends on the runner and environment, while the deterministic checks establish consistency with this project.
+
+| Stage | What is checked | Result |
+| --- | --- | --- |
+| Preflight | Linux tools, fixture paths and SHA-256 values | Invalid or changed inputs stop execution. |
+| Command execution | Exit status and explicit output predicate | A failed exercise prevents a successful saved run. |
+| Result writing | Complete JSON followed by atomic replacement | Readers see a completed result file. |
+| Saved-run inspection | Schema, order, timings and fixture-derived values | Nonzero exit for inconsistent evidence. |
+| Presentation audit | Navigation, links, matching images and PDF appendix | A repeatable file-level verification result. |
+
+## Command Workflows and Expected Results
+
+The exercises progress from preparation through files, text pipelines, batching, transfers and binary inspection. Each output is tied to a specific command and assertion. The gallery provides the visible walkthrough, while the JSON preserves the complete command record.
+
+The batch exercise puts -- before filename operands sent to touch and chmod. The separate NUL-delimited example keeps a filename with spaces intact. During reconstruction, xargs -n 1 invokes cat once per supplied part, retaining the classroom list order.
+
+The transfer server binds only to 127.0.0.1 and receives an automatically selected port. curl demonstrates a custom user agent and PUT upload. Wget demonstrates an appended log, an explicit byte-rate cap and timestamp-aware retrieval. The 37-byte fixture checks content correctness rather than sustained network speed.
+
+| Exercise range | Workflow | Checked outcome |
+| --- | --- | --- |
+| 01–02 | Environment and input discovery | Linux execution and ten fixture paths. |
+| 03–05 | File lifecycle, addition and permissions | Matching backup, decimal results and mode 700. |
+| 06–11 | find, grep and tr | Scoped fields and expected character transformations. |
+| 12–14 | AWK fields and aggregates | 8 score pairs, names, mean 84.875 and top score 95. |
+| 15–17 | xargs and filename boundaries | 5 mode-400 files, 16 reconstructed lines and a spaced filename. |
+| 18–21 | Loopback HTTP transfers | Verified GET/PUT bytes, HTTP 201 and timestamp-aware fetch. |
+| 22–24 | Hex inspection and reconstruction | Offset 0x0a, 3 groups of 3 bytes and exact round-trip. |
+
+## Banking Risk Review and Verification Ideas
+
+The banking case study follows a request across the browser, application, data store, payment integration and operator interfaces. It identifies assets, plausible weaknesses, proposed controls and a way to test those controls in an authorized application environment.
+
+Likelihood and impact use an illustrative 1–5 scale. Priority is their product. The risk register includes eight scenarios; the estimates support a design discussion and require reassessment against a real architecture and operating context.
+
+The local command demo demonstrates handling of files and evidence. It does not implement bank accounts or execute banking security tests. The threat-model document provides the detailed design narrative and the CSV supplies a compact review artifact.
+
+| Scenario | Proposed control | Verification idea |
+| --- | --- | --- |
+| Account takeover | MFA and secure account recovery | Test recovery and throttling with test identities. |
+| Cross-account access | Object-level ownership and role checks | Request another test account's record and require denial. |
+| SQL injection | Bound query values and limited database roles | Check that input remains data in the query path. |
+| Duplicate transfer | Idempotency and transaction-state validation | Repeat a test request and verify one debit. |
+| Session theft | Protected cookies, expiry and rotation | Inspect cookie policy and verify logout/expiry. |
+| Sensitive logs | Redaction, access control and retention | Inspect test logs for exposed credentials or account data. |
+| Dependency compromise | Inventory, update process and review | Review dependency findings and patch evidence. |
+| Service disruption | Capacity, recovery and layered rate controls | Measure behavior in an authorized load exercise. |
+
+## Troubleshooting and Failure Behavior
+
+A failure should point to the layer that needs attention. Start with doctor for tool availability, then inspect the specific exercise or evidence error. Keep the supplied fixtures unchanged while reproducing the saved examples.
+
+A demo failure does not produce a new successful result. The temporary workspace and loopback server are cleaned up through the runner's context and finally handling. A previous saved run can still exist, so inspect recorded_at when distinguishing it from a new execution.
+
+Rebuilding the presentation uses the saved result and shared figure metadata. To change explanatory captions, edit data/showcase.json. To change the additional project documentation, edit data/project_sections.json. Rebuild and verify afterward so the README, site and report agree.
+
+| Symptom | Likely cause | Action |
+| --- | --- | --- |
+| doctor reports not ready | Windows shell or missing Linux tools | Use Linux/WSL and install the named tool in that environment. |
+| Fixture checksum changed | Input bytes were edited or replaced | Compare with the course original before updating the manifest. |
+| Exercise fails | Command failed or output differed | Read its reported stdout/stderr and inspect the fixture. |
+| Evidence validation fails | Missing step, invalid metadata or inconsistent output | Inspect the JSON and rerun the maintained demo. |
+| Showcase browser is unavailable | Browser/runtime prerequisites are missing | Install the documented browser or pass --browser. |
+| Older result still displayed | Presentation was built from an earlier saved run | Check recorded_at, rebuild the showcase and refresh. |
+| SSH or systemctl reference differs | Distribution or service-manager setup varies | Use the intended VM and inspect its actual unit/service names. |
+
+## Testing Strategy and Review Checklist
+
+The project validates several layers independently. Exercise assertions check real command output, Python regression tests exercise failure cases, and the presentation audit checks the files used by the README, website and report.
+
+The eight regression tests cover finite decimal input, exact small decimal output, invalid numbers, fixture paths, a leading-dash filename, atomic JSON replacement, saved evidence and altered evidence. The tampering test includes a missing step, a changed score, an invalid timing and a failed-result flag.
+
+Browser checks cover the mobile menu, theme switch, all navbar destinations and their active highlight, dataset filtering, gallery search/category behavior, zoom, Previous/Next, keyboard controls, swipe handling and Back to Top. Checks use phone, tablet and desktop widths.
+
+The last twenty-four report pages are compared with the original submission using extracted text, page dimensions and rendered content. A small color-channel tolerance handles merged-document color-profile differences.
+
+| Check layer | Input | Acceptance |
+| --- | --- | --- |
+| Linux demo | Ten supplied fixtures and loopback server | 24 command/output checks pass. |
+| Regression suite | Valid and deliberately inconsistent inputs | 8 tests pass. |
+| Evidence audit | Saved JSON and fixture manifest | Ordered valid steps and consistent fixture-derived results. |
+| Site and README | Generated links and figure references | All local targets exist and image order matches. |
+| Figure export | 24 full images and 24 previews | 1440 × 900 and 960 × 600 pixels. |
+| PDF appendix | Original 24-page submission | Text, dimensions and rendered content retained. |
+| Responsive controls | 320, 390, 768, 1280 and 1440 px | Both themes and interaction checks pass. |

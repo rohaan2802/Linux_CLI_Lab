@@ -1,0 +1,129 @@
+{
+  "title": "Linux CLI Lab",
+  "name": "Linux_CLI_Lab",
+  "owner": "rohaan2802",
+  "author": "Mohammad Rohaan",
+  "roll": "22I-2327",
+  "figures": [
+    {
+      "id": "01",
+      "caption": "Confirms the Linux environment before the checked command sequence.",
+      "slug": "01-lab-evidence-v2"
+    },
+    {
+      "id": "02",
+      "caption": "Lists all ten supplied fixture files used by the repeatable demo.",
+      "slug": "02-lab-evidence-v2"
+    },
+    {
+      "id": "03",
+      "caption": "Creates an introduction, appends a marker, moves the backup and compares both files.",
+      "slug": "03-lab-evidence-v2"
+    },
+    {
+      "id": "04",
+      "caption": "Adds two decimal values and verifies that 0.1 plus 0.2 is displayed as 0.3.",
+      "slug": "04-lab-evidence-v2"
+    },
+    {
+      "id": "05",
+      "caption": "Applies mode 700 to a workspace copy and verifies that the program still runs.",
+      "slug": "05-lab-evidence-v2"
+    },
+    {
+      "id": "06",
+      "caption": "Finds the supplied account-audit file and extracts its username and comment fields.",
+      "slug": "06-lab-evidence-v2"
+    },
+    {
+      "id": "07",
+      "caption": "Uses POSIX digit and hexadecimal classes on controlled input strings.",
+      "slug": "07-lab-evidence-v2"
+    },
+    {
+      "id": "08",
+      "caption": "Converts the classroom account fixture to uppercase in the C locale.",
+      "slug": "08-lab-evidence-v2"
+    },
+    {
+      "id": "09",
+      "caption": "Removes uppercase and lowercase vowels from a short test phrase.",
+      "slug": "09-lab-evidence-v2"
+    },
+    {
+      "id": "10",
+      "caption": "Squeezes repeated spaces and translates the remaining separator into an underscore.",
+      "slug": "10-lab-evidence-v2"
+    },
+    {
+      "id": "11",
+      "caption": "Keeps alphanumeric characters and translates tabs into spaces.",
+      "slug": "11-lab-evidence-v2"
+    },
+    {
+      "id": "12",
+      "caption": "Reads the first and fourth fields as name:score pairs.",
+      "slug": "12-lab-evidence-v2"
+    },
+    {
+      "id": "13",
+      "caption": "Prints all eight student names on one comma-separated line.",
+      "slug": "13-lab-evidence-v2"
+    },
+    {
+      "id": "14",
+      "caption": "Calculates the count, average score and highest-scoring record.",
+      "slug": "14-lab-evidence-v2"
+    },
+    {
+      "id": "15",
+      "caption": "Creates five filenames, including a leading-dash name, then verifies mode 400.",
+      "slug": "15-lab-evidence-v2"
+    },
+    {
+      "id": "16",
+      "caption": "Reconstructs the 16-line classroom wordlist with one input per invocation.",
+      "slug": "16-lab-evidence-v2"
+    },
+    {
+      "id": "17",
+      "caption": "Preserves a filename containing spaces with NUL-delimited input.",
+      "slug": "17-lab-evidence-v2"
+    },
+    {
+      "id": "18",
+      "caption": "Fetches a loopback HTTP resource using the requested custom user agent.",
+      "slug": "18-lab-evidence-v2"
+    },
+    {
+      "id": "19",
+      "caption": "Uploads to a loopback endpoint, verifies its bytes and checks HTTP 201.",
+      "slug": "19-lab-evidence-v2"
+    },
+    {
+      "id": "20",
+      "caption": "Downloads a local fixture with an appended log and checks all 37 bytes.",
+      "slug": "20-lab-evidence-v2"
+    },
+    {
+      "id": "21",
+      "caption": "Uses timestamp-aware retrieval and verifies the resulting local content.",
+      "slug": "21-lab-evidence-v2"
+    },
+    {
+      "id": "22",
+      "caption": "Displays 50 bytes starting at the explicit zero-based offset 0x0a.",
+      "slug": "22-lab-evidence-v2"
+    },
+    {
+      "id": "23",
+      "caption": "Shows nine bytes per row as three groups of three octets.",
+      "slug": "23-lab-evidence-v2"
+    },
+    {
+      "id": "24",
+      "caption": "Extracts the supplied training flag and verifies a byte round-trip.",
+      "slug": "24-lab-evidence-v2"
+    }
+  ]
+}
