@@ -513,3 +513,7 @@ dialog::backdrop {
 .project-detail{margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--line)}
 .project-detail h3{font-size:1.45rem;margin:.2rem 0 .8rem}
 .project-detail .scroll{margin:1rem 0}
+
+/* Section symbols follow the active light/dark palette. */
+main section > h2{display:flex;align-items:center;gap:.65rem}
+.section-icon{width:1.25em;height:1.25em;flex:0 0 1.25em;color:var(--accent,currentColor)}

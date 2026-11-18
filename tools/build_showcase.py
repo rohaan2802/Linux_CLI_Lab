@@ -10,7 +10,7 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[1]
 import sys
 sys.path.insert(0, str(ROOT))
-from tools.content_sections import load_sections, markdown_sections, html_section, expand_site
+from tools.content_sections import load_sections, markdown_sections, html_section, expand_site, decorate_site
 FENCE = chr(96) * 3
 
 
@@ -176,7 +176,7 @@ def build_texts(settings, demo):
     site += '</div></section><section class="wrap" id="resources"><h2>Project files</h2><div class="resource-links">'+''.join(f'<a class="shortcut" href="{path}">{title}</a>' for title,path in resources)+'</div></section>'
     site += '<section class="wrap author" id="author"><h2>About the author</h2><p><strong>Mohammad Rohaan</strong> · BS Computer Science, FAST-NUCES · 22I-2327</p><p><a href="https://github.com/rohaan2802">GitHub profile</a> · <a href="mailto:m.rohaanarshad@gmail.com">Email Mohammad Rohaan</a></p></section></main><footer class="wrap">Linux CLI Lab · Command-line fundamentals and security reasoning</footer>'
     site += '<button id="to-top" aria-label="Back to top" hidden>'+icon('<path fill="currentColor" stroke="none" d="M12 3 2 13h6v8h8v-8h6L12 3Z"/>')+'</button><dialog id="viewer" aria-labelledby="viewer-position"><div class="viewer-controls"><button id="previous">Previous</button><button id="next">Next</button><button id="zoom" aria-pressed="false">Zoom</button><button id="close-viewer">Close</button></div><h3 id="viewer-position"></h3><div class="image-box"><img id="viewer-image" alt=""></div><p id="viewer-caption"></p></dialog></body></html>'
-    site = expand_site(site, sections)
+    site = decorate_site(expand_site(site, sections))
     (ROOT/"index.html").write_text(site, encoding="utf-8")
     return captions
 
